@@ -33,7 +33,7 @@ var osm = new ol.layer.Tile({
 });
 
 var map = new ol.Map({
-  layers: [raster, vector],
+  layers: [raster],
   target: document.getElementById('map'),
   view: new ol.View({
     center: [2000000, -3750000],
