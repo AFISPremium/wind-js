@@ -1,0 +1,20 @@
+#map  {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 500px;
+  height: 500px;
+}
+
+#canvasLayer {
+  position: absolute;
+  top: 0px;
+  left: 550px;
+  width: 500px;
+  height: 500px;
+  background-color: #000000
+}
+
+.hidden {
+  display: none;
+}
