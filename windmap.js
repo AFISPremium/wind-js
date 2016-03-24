@@ -1,25 +1,6 @@
 /* global ol */
 /* global Windy */
 
-var vectorSource = new ol.source.Vector({
-  format: new ol.format.GeoJSON(),
-  url: 'borders.json',
-  strategy: ol.loadingstrategy.tile(ol.tilegrid.createXYZ({
-    maxZoom: 19
-  }))
-});
-
-
-var vector = new ol.layer.Vector({
-  source: vectorSource,
-  style: new ol.style.Style({
-    stroke: new ol.style.Stroke({
-      color: 'rgba(0, 0, 255, 1.0)',
-      width: 2
-    })
-  })
-});
-
 var raster = new ol.layer.Tile({
   source: new ol.source.Stamen({
     layer: 'toner'
