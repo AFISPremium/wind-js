@@ -53,14 +53,14 @@ var canvasFunction = function(extent, resolution, pixelRatio, size, projection) 
   canvas = $('canvas#canvasLayer')[0];
   var context = canvas.getContext('2d');
 
-  //var canvasWidth = size[0],
-  //    canvasHeight = size[1];
+  var canvasWidth = size[0],
+      canvasHeight = size[1];
   
   //canvas.setAttribute('width', canvasWidth);
   //canvas.setAttribute('height', canvasHeight);
 
-  canvas.setAttribute('width', map.getSize()[0]);
-  canvas.setAttribute('height', map.getSize()[1]);
+  canvas.setAttribute('width', map.getSize()[0]*4);
+  canvas.setAttribute('height', map.getSize()[1]*4);
 
   // Canvas extent is different than map extent, so compute delta between 
   // left-top of map and canvas extent.
@@ -81,7 +81,8 @@ var canvasFunction = function(extent, resolution, pixelRatio, size, projection) 
 var canvasLayer = new ol.layer.Image({
   source: new ol.source.ImageCanvas({
     canvasFunction: canvasFunction,
-    projection: 'EPSG:3857'
+    projection: 'EPSG:3857',
+    ratio: 1
   })
 });
 
@@ -112,21 +113,32 @@ function redraw() {
   setTimeout(function() {
     var mapSize = map.getSize();
     var extent = map.getView().calculateExtent(mapSize);
+
     extent = ol.proj.transformExtent(extent, 'EPSG:3857', 'EPSG:4326');
-    var bounds = [
+
+    var canvas_bounds = [
         [0,0],
-        [mapSize[0], mapSize[1]]
+        [mapSize[0]*2, mapSize[1]*2]
       ]; 
-    console.log('redraw windy.start ' + bounds + ' | ' + mapSize + ' | ' + extent);
+
+      var map_projected_bounds = [
+        [
+          extent[0],
+          extent[1]
+        ],
+        [
+          extent[2],
+          extent[3]
+        ]
+      ];
+
+    console.log('redraw windy.start ' + canvas_bounds + ' | ' + mapSize + ' | ' + extent);
     windy.start(
-      bounds,
-      mapSize[0], mapSize[1], 
-      [
-        [extent[0], extent[1]],
-        [extent[2], extent[3]]
-      ], [0,0]
-      //windy_delta
+      canvas_bounds,
+      mapSize[0]*2, mapSize[1]*2, 
+      map_projected_bounds
     );
+    //redraw();
   }, 500);
 }
 

@@ -459,6 +459,11 @@ var Windy = function( params ){
       height: height
     };
 
+    console.log("mapBounds"+ mapBounds);
+
+    console.log("Bounds "+ bounds);
+    console.log("Extent "+ extent);
+
     stop();
 
     // build grid
